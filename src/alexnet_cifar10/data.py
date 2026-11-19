@@ -14,7 +14,8 @@ def load_data(batch_size=5000):
     )
 
     # 50000 10000
-    print(len(data_tr), len(data_ts))
+    print(
+        f"training dataset size: {len(data_tr)}, test dataset size: {len(data_ts)}")
     dataloader_tr = DataLoader(data_tr, batch_size=batch_size)
     dataloader_ts = DataLoader(data_ts, batch_size=batch_size)
     return dataloader_tr, dataloader_ts

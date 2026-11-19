@@ -22,7 +22,7 @@ class AlexNet(nn.Module):
             nn.Conv2d(in_channels=384, out_channels=192, kernel_size=3),
             # conv5
             nn.Conv2d(in_channels=192, out_channels=256, kernel_size=3),
-            act(),
+            act,
             nn.MaxPool2d(kernel_size=3, stride=2),
             # fc6
             nn.Linear(in_features=9216, out_features=4096),
