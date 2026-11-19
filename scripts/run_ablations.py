@@ -8,6 +8,5 @@ RESULTS_DIR = ROOT/"results"
 
 for ablation, config in CONFIGS.items():
     for seed in [1, 2, 3]:
-        runner.run(ablation, seed, RESULTS_DIR,
+        runner.run(ablation, seed, RESULTS_DIR, aug=config["aug"],
                    act=config["act"],   dropout=config["dropout"])
-    break

@@ -8,16 +8,16 @@ ACTIVATIONS = {
     "tanh": nn.Tanh(),
 }
 
+device = torch.accelerator.current_accelerator().type \
+    if torch.accelerator.is_available() else "cpu"
+print(f"current accelerator: {device}")
 
-def run(name, seed, results_dir, act="relu", dropout=0.5, epochs=2):
-    device = torch.accelerator.current_accelerator().type \
-        if torch.accelerator.is_available() else "cpu"
-    print(f"current accelerator: {device}")
 
+def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=2):
     torch.manual_seed(seed)
     # load data
     batch_size = 128  # batch size in paper
-    dataloader_tr, dataloader_ts = data.load_data(batch_size)
+    dataloader_tr, dataloader_ts = data.load_data(batch_size, aug)
 
     # load model
     num_class = 10  # class number for CIFAR-10
@@ -32,7 +32,7 @@ def run(name, seed, results_dir, act="relu", dropout=0.5, epochs=2):
     optimizer = torch.optim.SGD(alexnet.parameters(), weight_decay=5e-4)
     history = {"train_loss": [], "test_loss": [],
                "top1_error": [], "top5_error": []}
-    for i in range(epochs):
+    for _ in range(epochs):
         train_loss = engine.train(
             dataloader_tr, alexnet, loss_fn, optimizer, device)
         test_loss, top1_error, top5_error = engine.test(

@@ -34,8 +34,3 @@ def test(dataloader_ts, model, loss_fn, device):
             correct_5 += (top5 == y.view(-1, 1)).any(dim=1).sum().item()
 
     return total_loss / size, (1 - (correct_1 / size)) * 100, (1 - (correct_5 / size)) * 100
-
-    print(
-        f"averge loss: {total_loss / size:.4f}, \
-        top1 error rate: {(1 - (correct_1 / size)) * 100:.4f} % \
-            top5 error rate: {(1 - (correct_5 / size)) * 100:.4f} %")
