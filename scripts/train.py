@@ -22,13 +22,12 @@ def main():
     print(f"trainable parameters: {n_trainable}")
 
     # training
-    # epochs = 5
-    # loss_fn = nn.CrossEntropyLoss()
-    # optimizer = torch.optim.SGD(weight_decay=5e-4)
-    # for i in range(epochs):
-    # print(f"epoch{i}: ------------------------------")
-    # engine.train(dataloader_tr, model, loss_fn, optimizer, device)
-    # break
+    epochs = 5
+    loss_fn = nn.CrossEntropyLoss()
+    optimizer = torch.optim.SGD(alexnet.parameters(), weight_decay=5e-4)
+    for i in range(epochs):
+        print(f"epoch{i}: ------------------------------")
+        engine.train(dataloader_tr, alexnet, loss_fn, optimizer, device)
 
 
 if __name__ == "__main__":

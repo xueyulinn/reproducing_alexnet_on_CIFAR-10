@@ -8,7 +8,6 @@ class AlexNet(nn.Module):
 
     def __init__(self, act, num_class):
         super().__init__()
-        self.flatten = nn.Flatten()
         self.cnn_linear_stack = nn.Sequential(
             # conv1: (32,32,3)
             nn.Conv2d(in_channels=3, out_channels=64,
@@ -78,6 +77,5 @@ class AlexNet(nn.Module):
         # )
 
     def forward(self, x):
-        x = self.flatten(x)
         logits = self.cnn_linear_stack(x)
         return logits
