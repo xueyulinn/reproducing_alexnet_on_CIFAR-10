@@ -11,3 +11,5 @@ wheels/
 
 # CIFR-10 data
 data
+
+results

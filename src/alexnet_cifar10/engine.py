@@ -2,19 +2,19 @@ import torch
 
 
 def train(dataloader_tr, model, loss_fn, optimizer, device):
+    size = len(dataloader_tr.dataset)
     model.train()
-    # lossi = []
+    total_loss = 0.0
     for batch, (X, y) in enumerate(dataloader_tr):
         X, y = X.to(device), y.to(device)
         pred = model(X)
         loss = loss_fn(pred, y)
+        total_loss += loss.item() * X.shape[0]
         loss.backward()
 
         optimizer.step()
         optimizer.zero_grad()
-
-        if batch % 100 == 0:
-            print(f"batch: {batch}, loss: {loss.item():.4f}")
+    return total_loss / size
 
 
 def test(dataloader_ts, model, loss_fn, device):
@@ -28,10 +28,12 @@ def test(dataloader_ts, model, loss_fn, device):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             loss = loss_fn(pred, y)
-            total_loss += (loss * X.size(0)).item()
+            total_loss += loss.item() * X.shape[0]
             correct_1 += (pred.argmax(1) == y).sum().item()
             top5 = pred.topk(5, dim=1).indices
             correct_5 += (top5 == y.view(-1, 1)).any(dim=1).sum().item()
+
+    return total_loss / size, (1 - (correct_1 / size)) * 100, (1 - (correct_5 / size)) * 100
 
     print(
         f"averge loss: {total_loss / size:.4f}, \

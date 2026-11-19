@@ -1,3 +1,3 @@
-relu_base:  {act: relu, dropout: 0.5, augment: true}
-tanh_noreg: {act: tanh, dropout: 0.0, augment: false}
-relu_noreg: {act: tanh, dropout: 0.0, augment: false}
+relu_base:  {act: relu, dropout: 0.5}
+tanh_noreg: {act: tanh, dropout: 0.0}
+relu_noreg: {act: tanh, dropout: 0.0}
