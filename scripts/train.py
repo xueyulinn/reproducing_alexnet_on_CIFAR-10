@@ -28,6 +28,9 @@ def main():
     for i in range(epochs):
         print(f"epoch{i}: ------------------------------")
         engine.train(dataloader_tr, alexnet, loss_fn, optimizer, device)
+        engine.test(dataloader_ts, alexnet, loss_fn, device)
+        if i > 1:
+            break
 
 
 if __name__ == "__main__":
