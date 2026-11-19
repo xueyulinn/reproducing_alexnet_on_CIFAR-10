@@ -21,7 +21,7 @@ def main():
                       for p in alexnet.parameters() if p.requires_grad)
     print(f"trainable parameters: {n_trainable}")
 
-    # training
+    # training & testing
     epochs = 5
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(alexnet.parameters(), weight_decay=5e-4)
@@ -29,8 +29,6 @@ def main():
         print(f"epoch{i}: ------------------------------")
         engine.train(dataloader_tr, alexnet, loss_fn, optimizer, device)
         engine.test(dataloader_ts, alexnet, loss_fn, device)
-        if i > 1:
-            break
 
 
 if __name__ == "__main__":

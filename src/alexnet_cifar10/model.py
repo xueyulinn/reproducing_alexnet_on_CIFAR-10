@@ -6,7 +6,7 @@ class AlexNet(nn.Module):
     Only downsample at pooling layer
     '''
 
-    def __init__(self, act, num_class):
+    def __init__(self, act, dropout, num_class):
         super().__init__()
         self.cnn_linear_stack = nn.Sequential(
             # conv1: (32,32,3)
@@ -36,11 +36,11 @@ class AlexNet(nn.Module):
             # fc6 (4,4,256)
             nn.Linear(in_features=4096, out_features=1024),
             act,
-            nn.Dropout(),
+            nn.Dropout(dropout),
             # fc7
             nn.Linear(in_features=1024, out_features=1024),
             act,
-            nn.Dropout(),
+            nn.Dropout(dropout),
             # fc8
             nn.Linear(1024, num_class)
         )
