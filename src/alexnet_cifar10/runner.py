@@ -8,8 +8,8 @@ ACTIVATIONS = {
     "tanh": nn.Tanh(),
 }
 
-device = torch.accelerator.current_accelerator().type \
-    if torch.accelerator.is_available() else "cpu"
+device = (torch.accelerator.current_accelerator().type
+          if torch.accelerator.is_available() else "cpu")
 print(f"current accelerator: {device}")
 
 
@@ -41,7 +41,7 @@ def run(name, seed, results_dir, aug=True, no_reg=False, act="relu", dropout=0.5
         history["train_loss"].append(train_loss)
         history["train_top1_error"].append(train_top1_error)
         history["test_loss"].append(test_loss)
-        history["top1_error"].append(test_top1_error)
+        history["test_top1_error"].append(test_top1_error)
 
     with open(results_dir / f"{name}_seed{seed}.json", "w") as f:
         json.dump(history, f)
