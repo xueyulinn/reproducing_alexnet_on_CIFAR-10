@@ -12,4 +12,4 @@
 
 cd /scratch/$USER/reproducing_alexnet_on_CIFAR-10
 export UV_CACHE_DIR=/scratch/$USER/.uv-cache
-uv run pythona scripts/run_ablations.py
+uv run python scripts/run_ablations.py
