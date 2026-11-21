@@ -13,7 +13,7 @@ device = torch.accelerator.current_accelerator().type \
 print(f"current accelerator: {device}")
 
 
-def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=2):
+def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=50):
     torch.manual_seed(seed)
     # load data
     batch_size = 128  # batch size in paper
@@ -30,17 +30,17 @@ def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=2):
     # training & testing
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(alexnet.parameters(), weight_decay=5e-4)
-    history = {"train_loss": [], "test_loss": [],
-               "top1_error": [], "top5_error": []}
+    history = {"train_loss": [], "train_top1_error": [], "test_loss": [],
+               "test_top1_error": []}
     for _ in range(epochs):
-        train_loss = engine.train(
+        train_loss, train_top1_error = engine.train(
             dataloader_tr, alexnet, loss_fn, optimizer, device)
-        test_loss, top1_error, top5_error = engine.test(
+        test_loss, test_top1_error = engine.test(
             dataloader_ts, alexnet, loss_fn, device)
         history["train_loss"].append(train_loss)
+        history["train_top1_error"].append(train_top1_error)
         history["test_loss"].append(test_loss)
-        history["top1_error"].append(top1_error)
-        history["top5_error"].append(top5_error)
+        history["top1_error"].append(test_top1_error)
 
     with open(results_dir / f"{name}_seed{seed}.json", "w") as f:
         json.dump(history, f)
