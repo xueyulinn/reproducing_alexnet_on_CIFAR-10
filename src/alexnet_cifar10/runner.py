@@ -13,7 +13,7 @@ device = torch.accelerator.current_accelerator().type \
 print(f"current accelerator: {device}")
 
 
-def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=50):
+def run(name, seed, results_dir, aug=True, no_reg=False, act="relu", dropout=0.5, epochs=50):
     torch.manual_seed(seed)
     # load data
     batch_size = 128  # batch size in paper
@@ -29,7 +29,8 @@ def run(name, seed, results_dir, aug=True, act="relu", dropout=0.5, epochs=50):
 
     # training & testing
     loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(alexnet.parameters(), weight_decay=5e-4)
+    optimizer = torch.optim.SGD(
+        alexnet.parameters(), lr=0.01, momentum=0.9, weight_decay=0 if no_reg else 5e-4)
     history = {"train_loss": [], "train_top1_error": [], "test_loss": [],
                "test_top1_error": []}
     for _ in range(epochs):

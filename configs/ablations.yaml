@@ -1,5 +1,5 @@
-relu_base:  {act: relu, dropout: 0.5, aug: true}
-relu_noaug: {act: relu, dropout: 0.5, aug: false}
-relu_nodropout: {act: relu, dropout: 0.0, aug: true}
-#tanh_noreg: {act: tanh, dropout: 0.0, aug: false}
-relu_noreg: {act: tanh, dropout: 0.0, aug: false}
+relu_base:  {act: relu, dropout: 0.5, aug: true, no_reg: false}
+relu_noaug: {act: relu, dropout: 0.5, aug: false, no_reg: false}
+relu_nodropout: {act: relu, dropout: 0.0, aug: true, no_reg: false}
+tanh_noreg: {act: tanh, dropout: 0.0, aug: false, no_reg: true}
+relu_noreg: {act: relu, dropout: 0.0, aug: false, no_reg: true}
